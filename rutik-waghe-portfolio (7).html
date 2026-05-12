@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rutik Waghe — React Native Developer | Mobile Application Developer</title>
+<meta name="description" content="React Native Developer | Mobile Application Developer with 4+ years building scalable cross-platform iOS & Android apps. Immediate Joiner. Mumbai, India."/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23050709'/><rect width='64' height='64' rx='14' fill='url(%23g)' opacity='0.15'/><defs><linearGradient id='g' x1='0' y1='0' x2='64' y2='64' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='%233b82f6'/><stop offset='1' stop-color='%238b5cf6'/></linearGradient></defs><rect x='1' y='1' width='62' height='62' rx='13' fill='none' stroke='url(%23g)' stroke-width='1.5' opacity='0.6'/><text x='32' y='40' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='22' fill='%233b82f6' text-anchor='middle' letter-spacing='-1'>RW</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root{
+--bg:#050709;--bg2:#080c12;--bg3:#0d1420;
+--surface:#0f1822;--surface2:#141f2e;--surface3:#192336;
+--border:#1e2d42;--border2:#243549;
+--accent:#3b82f6;--accent2:#60a5fa;--accent3:#93c5fd;
+--green:#10b981;--purple:#8b5cf6;--amber:#f59e0b;
+--text:#f0f4f8;--text2:#94a3b8;--text3:#64748b;
+--font-display:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
+--radius:12px;--radius-lg:20px;--radius-xl:28px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.7;overflow-x:hidden;}
+::selection{background:rgba(59,130,246,.3);color:#fff;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+
+/* SCROLL PROGRESS */
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--purple));z-index:9999;width:0%;transition:width .1s;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;transition:all .3s;}
+nav.scrolled{background:rgba(5,7,9,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--text);letter-spacing:-.02em;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:.875rem;font-weight:400;transition:color .2s;letter-spacing:.01em;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{background:var(--accent);color:#fff;padding:.45rem 1.25rem;border-radius:8px;font-size:.875rem;font-weight:500;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{width:22px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s;}
+.mob-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(5,7,9,.97);backdrop-filter:blur(20px);padding:1.5rem 2rem 2rem;border-bottom:1px solid var(--border);z-index:999;}
+.mob-menu.open{display:block;}
+.mob-menu ul{list-style:none;display:flex;flex-direction:column;gap:1rem;}
+.mob-menu a{color:var(--text2);text-decoration:none;font-size:1rem;}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:0 2rem;}
+.hero-canvas{position:absolute;inset:0;pointer-events:none;}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:2;padding:6rem 0 4rem;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);border-radius:100px;padding:.35rem 1rem;font-size:.8rem;color:var(--accent2);margin-bottom:1.75rem;animation:fadeUp .6s ease both;}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+.hero-name{font-family:var(--font-display);font-size:clamp(3rem,7vw,5.5rem);font-weight:800;line-height:1.05;letter-spacing:-.04em;animation:fadeUp .6s .1s ease both;}
+.hero-name .line2{color:transparent;-webkit-text-stroke:1px rgba(148,163,184,.4);}
+.hero-role{font-family:var(--font-display);font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:500;color:var(--accent2);margin-top:.75rem;animation:fadeUp .6s .2s ease both;}
+.hero-tagline{font-size:1.05rem;color:var(--text2);max-width:560px;margin-top:1.25rem;font-weight:300;animation:fadeUp .6s .3s ease both;}
+.hero-meta{display:flex;align-items:center;gap:1.5rem;margin-top:1.5rem;flex-wrap:wrap;animation:fadeUp .6s .35s ease both;}
+.hero-meta-item{display:flex;align-items:center;gap:.5rem;color:var(--text3);font-size:.875rem;}
+.hero-meta-item svg{color:var(--accent);flex-shrink:0;}
+.hero-btns{display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;animation:fadeUp .6s .4s ease both;}
+.btn-primary{background:var(--accent);color:#fff;padding:.75rem 1.75rem;border-radius:10px;font-weight:500;text-decoration:none;font-size:.95rem;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem;}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 12px 30px rgba(59,130,246,.3);}
+.btn-outline{background:transparent;color:var(--text);padding:.75rem 1.75rem;border-radius:10px;font-weight:500;text-decoration:none;font-size:.95rem;border:1px solid var(--border2);transition:all .25s;display:inline-flex;align-items:center;gap:.5rem;}
+.btn-outline:hover{background:var(--surface);border-color:var(--border2);transform:translateY(-2px);}
+.hero-float{position:absolute;right:-60px;top:50%;transform:translateY(-50%);width:520px;height:520px;animation:fadeUp .8s .2s ease both;}
+.tech-orb{position:absolute;border-radius:50%;border:1px solid;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;animation:orbit linear infinite;}
+.glow-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:float 8s ease-in-out infinite;}
+
+/* SECTIONS */
+section{padding:6rem 2rem;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.section-label{font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;}
+.section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.03em;line-height:1.15;}
+.section-title span{color:transparent;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;}
+.section-sub{color:var(--text2);font-size:1rem;max-width:600px;margin-top:.75rem;font-weight:300;}
+.section-head{margin-bottom:3.5rem;}
+
+/* ABOUT */
+#about{background:var(--bg2);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.about-text p{color:var(--text2);font-weight:300;line-height:1.8;font-size:1.02rem;}
+.about-text p+p{margin-top:1rem;}
+.about-highlights{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;}
+.highlight-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:all .3s;}
+.highlight-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.highlight-card .num{font-family:var(--font-display);font-size:1.75rem;font-weight:700;color:var(--accent);}
+.highlight-card .lbl{font-size:.8rem;color:var(--text3);margin-top:.25rem;}
+.about-image{position:relative;}
+.about-card-main{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2.5rem;text-align:center;}
+.about-avatar{width:100px;height:100px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:2rem;font-weight:700;color:#fff;}
+.about-card-main h3{font-family:var(--font-display);font-size:1.3rem;font-weight:700;}
+.about-card-main .role-tag{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--accent2);font-size:.8rem;padding:.3rem .85rem;border-radius:100px;display:inline-block;margin:.5rem 0;}
+.tech-pills{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1.25rem;}
+.pill{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:.75rem;padding:.25rem .7rem;border-radius:100px;}
+
+/* SKILLS */
+#skills{background:var(--bg);}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
+.skill-category{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;transition:all .3s;position:relative;overflow:hidden;}
+.skill-category::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cat-color,var(--accent));opacity:0;transition:opacity .3s;}
+.skill-category:hover{border-color:var(--border2);transform:translateY(-3px);}
+.skill-category:hover::before{opacity:1;}
+.skill-cat-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;}
+.skill-cat-icon{width:38px;height:38px;border-radius:10px;background:var(--cat-bg,rgba(59,130,246,.1));display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.skill-cat-title{font-family:var(--font-display);font-size:.95rem;font-weight:600;color:var(--text);}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.5rem;}
+.skill-tag{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:.78rem;padding:.3rem .75rem;border-radius:8px;transition:all .2s;}
+.skill-tag:hover{border-color:var(--accent);color:var(--accent2);background:rgba(59,130,246,.06);}
+
+/* EXPERIENCE */
+#experience{background:var(--bg2);}
+.timeline{position:relative;max-width:860px;}
+.timeline::before{content:'';position:absolute;left:28px;top:8px;bottom:8px;width:1px;background:var(--border);}
+.timeline-item{position:relative;padding-left:70px;margin-bottom:3rem;}
+.timeline-dot{position:absolute;left:16px;top:6px;width:24px;height:24px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;z-index:1;}
+.timeline-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);}
+.timeline-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;transition:all .3s;}
+.timeline-card:hover{border-color:var(--border2);transform:translateX(4px);}
+.tl-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.25rem;}
+.tl-company{font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--text);}
+.tl-badge{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:var(--green);font-size:.75rem;padding:.25rem .7rem;border-radius:100px;white-space:nowrap;}
+.tl-role{color:var(--accent2);font-size:.9rem;font-weight:500;margin-bottom:.25rem;}
+.tl-meta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem;}
+.tl-meta-item{color:var(--text3);font-size:.8rem;display:flex;align-items:center;gap:.35rem;}
+.tl-points{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.tl-points li{display:flex;gap:.75rem;color:var(--text2);font-size:.9rem;font-weight:300;}
+.tl-points li::before{content:'→';color:var(--accent);flex-shrink:0;margin-top:.1rem;}
+
+/* PROJECTS */
+#projects{background:var(--bg);}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(520px,1fr));gap:1.75rem;}
+.project-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;transition:all .35s;position:relative;}
+.project-card:hover{border-color:rgba(59,130,246,.4);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.4);}
+.proj-header{padding:2rem 2rem 1.25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
+.proj-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.proj-top{flex:1;}
+.proj-name{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--text);}
+.proj-client{color:var(--text3);font-size:.8rem;margin-top:.2rem;}
+.proj-stats{display:flex;gap:.75rem;margin-top:.75rem;flex-wrap:wrap;}
+.proj-stat{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.3rem .75rem;font-size:.78rem;color:var(--text2);display:flex;align-items:center;gap:.35rem;}
+.proj-stat svg{color:var(--accent);flex-shrink:0;}
+.proj-body{padding:0 2rem 1.5rem;}
+.proj-desc{color:var(--text2);font-size:.9rem;font-weight:300;line-height:1.7;margin-bottom:1.25rem;}
+.proj-highlights{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem;}
+.proj-hl{display:flex;align-items:flex-start;gap:.6rem;font-size:.85rem;color:var(--text2);}
+.proj-hl::before{content:'✦';color:var(--accent);flex-shrink:0;font-size:.65rem;margin-top:.25rem;}
+.proj-tech{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem;}
+.proj-tech-tag{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.18);color:var(--accent3);font-size:.73rem;padding:.2rem .6rem;border-radius:6px;}
+.proj-links{display:flex;gap:.75rem;flex-wrap:wrap;}
+.proj-link{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1rem;border-radius:8px;font-size:.8rem;font-weight:500;text-decoration:none;transition:all .2s;border:1px solid;}
+.proj-link.android{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.2);color:var(--green);}
+.proj-link.ios{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.2);color:#a78bfa;}
+.proj-link:hover{transform:translateY(-1px);}
+
+/* STATS */
+#stats{background:var(--bg2);}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem 1rem;text-align:center;transition:all .3s;position:relative;overflow:hidden;}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+.stat-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(59,130,246,.06),transparent 70%);pointer-events:none;}
+.stat-num{font-family:var(--font-display);font-size:2.5rem;font-weight:800;color:var(--accent);letter-spacing:-.04em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.stat-label{color:var(--text2);font-size:.85rem;margin-top:.5rem;font-weight:300;line-height:1.4;}
+
+/* CONTACT */
+#contact{background:var(--bg);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.contact-items{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;}
+.contact-item{display:flex;align-items:center;gap:1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;text-decoration:none;color:inherit;transition:all .3s;}
+.contact-item:hover{border-color:var(--accent);transform:translateX(4px);}
+.contact-icon{width:42px;height:42px;border-radius:10px;background:rgba(59,130,246,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.contact-icon svg{color:var(--accent);}
+.contact-label{font-size:.75rem;color:var(--text3);margin-bottom:.15rem;}
+.contact-val{color:var(--text);font-size:.9rem;font-weight:500;}
+.contact-form{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2.5rem;}
+.contact-form h3{font-family:var(--font-display);font-size:1.25rem;font-weight:700;margin-bottom:.4rem;}
+.contact-form p{color:var(--text2);font-size:.9rem;font-weight:300;}
+
+/* RESUME */
+#resume{background:var(--bg2);}
+.resume-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);padding:3rem;max-width:680px;margin:0 auto;text-align:center;}
+.resume-card h3{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:.5rem;}
+.resume-card p{color:var(--text2);font-weight:300;margin-bottom:2rem;}
+.resume-preview{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin-bottom:2rem;text-align:left;}
+.resume-preview-row{display:flex;justify-content:space-between;align-items:baseline;padding:.65rem 0;border-bottom:1px solid var(--border);gap:1rem;}
+.resume-preview-row:last-child{border-bottom:none;}
+.resume-preview-row .key{color:var(--text3);font-size:.85rem;white-space:nowrap;flex-shrink:0;min-width:90px;}
+.resume-preview-row .val{color:var(--text2);font-size:.85rem;font-weight:400;text-align:right;}
+@media(max-width:480px){
+  .resume-preview-row{flex-direction:column;align-items:flex-start;gap:.2rem;}
+  .resume-preview-row .val{text-align:left;color:var(--text1);}
+}
+.ats-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:var(--green);font-size:.78rem;padding:.35rem 1rem;border-radius:100px;margin-bottom:1.5rem;}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 2rem;text-align:center;}
+footer p{color:var(--text3);font-size:.85rem;}
+footer span{color:var(--accent);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+@keyframes orbit{from{transform:rotate(var(--start)) translateX(var(--r)) rotate(calc(-1 * var(--start)));}to{transform:rotate(calc(var(--start) + 360deg)) translateX(var(--r)) rotate(calc(-1 * (var(--start) + 360deg)));}}
+@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+@keyframes gridMove{0%{background-position:0 0;}100%{background-position:40px 40px;}}
+@keyframes countUp{from{opacity:0;}to{opacity:1;}}
+
+.reveal{opacity:0;transform:translateY(30px);transition:all .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+
+/* MOBILE */
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .hero-float{display:none;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;}
+  .about-image{order:-1;}
+  .projects-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  #hero{padding:0 1.25rem;}
+  section{padding:4rem 1.25rem;}
+  .timeline-card{padding:1.5rem;}
+  .proj-header,.proj-body{padding-left:1.5rem;padding-right:1.5rem;}
+}
+@media(max-width:480px){
+  .about-highlights{grid-template-columns:1fr 1fr;}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:.75rem;}
+  .stat-card{padding:1.25rem .75rem;}
+  .stat-num{font-size:1.8rem;letter-spacing:-.03em;}
+  .stat-label{font-size:.75rem;}
+  .hero-btns{flex-direction:column;}
+  .btn-primary,.btn-outline{justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="javascript:void(0)" onclick="navScrollTo('hero')" class="nav-logo">RW<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="javascript:void(0)" onclick="navScrollTo('about')">About</a></li>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('skills')">Skills</a></li>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('experience')">Experience</a></li>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('projects')">Projects</a></li>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('contact')">Contact</a></li>
+  </ul>
+  <a href="mailto:rutikwaghe123@gmail.com?subject=Hiring%20Inquiry%20%E2%80%94%20Rutik%20Waghe&body=Hi%20Rutik%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect%20regarding%20a%20React%20Native%20opportunity.%0A%0A" class="nav-cta">Hire Me</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <ul>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('about');closeMob()">About</a></li>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('skills');closeMob()">Skills</a></li>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('experience');closeMob()">Experience</a></li>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('projects');closeMob()">Projects</a></li>
+    <li><a href="javascript:void(0)" onclick="navScrollTo('contact');closeMob()">Contact</a></li>
+    <li><a href="mailto:rutikwaghe123@gmail.com?subject=Hiring%20Inquiry%20%E2%80%94%20Rutik%20Waghe&body=Hi%20Rutik%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect%20regarding%20a%20React%20Native%20opportunity.%0A%0A" onclick="closeMob()">Hire Me</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+
+  <!-- Glow blobs -->
+  <div class="glow-blob" style="width:500px;height:500px;background:rgba(59,130,246,.06);left:-100px;top:10%;"></div>
+  <div class="glow-blob" style="width:400px;height:400px;background:rgba(139,92,246,.05);right:-80px;bottom:10%;animation-delay:-4s;"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span>Immediate Joiner · Open to Full-Time &amp; Remote Roles</span>
+    </div>
+    <h1 class="hero-name">
+      Rutik<br/>
+      <span class="line2">Waghe</span>
+    </h1>
+    <p class="hero-role">React Native Developer · Mobile Application Developer</p>
+    <p class="hero-tagline">Building scalable, secure, high-performance cross-platform mobile applications.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Mumbai, India
+      </div>
+      <div class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        4+ Years Experience
+      </div>
+      <div class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        iOS &amp; Android
+      </div>
+    </div>
+    <div class="hero-btns">
+      <a href="mailto:rutikwaghe123@gmail.com?subject=Hiring%20Inquiry%20%E2%80%94%20Rutik%20Waghe&body=Hi%20Rutik%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect%20regarding%20a%20React%20Native%20opportunity.%0A%0A" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact Me
+      </a>
+      <a href="javascript:void(0)" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})" class="btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        View Projects
+      </a>
+      <a href="https://drive.google.com/uc?export=download&id=1etyQdlLkDMu5TzwkRO5gUWXt_aIj8lMn" target="_blank" class="btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="section-label">About Me</p>
+        <h2 class="section-title" style="margin-bottom:1.5rem;">Crafting <span>mobile experiences</span> that scale</h2>
+        <p>I'm a React Native Developer with 4+ years of experience building production-grade iOS and Android applications. My work spans OTT streaming, enterprise HR, field operations, and safety compliance — always with a focus on performance, security, and reliability.</p>
+        <p>I specialize in high-performance architecture — from Hermes-tuned bundles and FlatList render optimizations to enterprise-grade security implementations including SSL pinning, AES-256 encryption, and biometric authentication that pass formal client security audits with zero critical findings.</p>
+        <p>My approach is rooted in clean code, reusable component systems, and offline-first data patterns that keep apps resilient regardless of network conditions. I've shipped features to users across India, the Gulf, Canada, and the UK.</p>
+        <div class="about-highlights">
+          <div class="highlight-card">
+            <div class="num">4+</div>
+            <div class="lbl">Years of Experience</div>
+          </div>
+          <div class="highlight-card">
+            <div class="num">10M+</div>
+            <div class="lbl">App Downloads</div>
+          </div>
+          <div class="highlight-card">
+            <div class="num">99%</div>
+            <div class="lbl">Crash-Free Rate</div>
+          </div>
+          <div class="highlight-card">
+            <div class="num">8+</div>
+            <div class="lbl">Production Apps</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-image reveal reveal-delay-2">
+        <div class="about-card-main">
+          <div class="about-avatar">RW</div>
+          <h3>Rutik Tukaram Waghe</h3>
+          <span class="role-tag">React Native Developer · Mobile Application Developer</span>
+          <div class="tech-pills">
+            <span class="pill">React Native (CLI)</span>
+            <span class="pill">JavaScript (ES6+)</span>
+            <span class="pill">TypeScript</span>
+            <span class="pill">State Management</span>
+            <span class="pill">Performance</span>
+            <span class="pill">Mobile Security</span>
+            <span class="pill">Offline Architecture</span>
+            <span class="pill">Firebase Services</span>
+            <span class="pill">Testing</span>
+            <span class="pill">REST APIs</span>
+            <span class="pill">Version Control</span>
+            <span class="pill">Deployments</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <p class="section-label">Technical Stack</p>
+      <h2 class="section-title">Skills & <span>Expertise</span></h2>
+      <p class="section-sub">A comprehensive toolkit for building production-grade mobile applications.</p>
+    </div>
+    <div class="skills-grid">
+      <!-- React Native (CLI) -->
+      <div class="skill-category reveal" style="--cat-color:#3b82f6;--cat-bg:rgba(59,130,246,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">📱</div>
+          <span class="skill-cat-title">React Native (CLI)</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">React Native CLI</span>
+          <span class="skill-tag">React Navigation</span>
+          <span class="skill-tag">Native Module Bridging</span>
+          <span class="skill-tag">Custom Components</span>
+          <span class="skill-tag">Platform-Specific Code</span>
+          <span class="skill-tag">Cross-Platform (iOS &amp; Android)</span>
+        </div>
+      </div>
+
+      <!-- JavaScript (ES6+) -->
+      <div class="skill-category reveal reveal-delay-1" style="--cat-color:#f59e0b;--cat-bg:rgba(245,158,11,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">⚡</div>
+          <span class="skill-cat-title">JavaScript (ES6+)</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">JavaScript ES6+</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Async/Await</span>
+          <span class="skill-tag">Promises</span>
+          <span class="skill-tag">Destructuring</span>
+          <span class="skill-tag">Functional Patterns</span>
+        </div>
+      </div>
+
+      <!-- State Management -->
+      <div class="skill-category reveal reveal-delay-2" style="--cat-color:#8b5cf6;--cat-bg:rgba(139,92,246,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">🗃️</div>
+          <span class="skill-cat-title">State Management</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Redux Toolkit</span>
+          <span class="skill-tag">Redux Saga</span>
+          <span class="skill-tag">Context API</span>
+          <span class="skill-tag">TanStack Query</span>
+          <span class="skill-tag">Selectors &amp; Memoization</span>
+          <span class="skill-tag">Async Operations</span>
+        </div>
+      </div>
+
+      <!-- Performance -->
+      <div class="skill-category reveal" style="--cat-color:#10b981;--cat-bg:rgba(16,185,129,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">🚀</div>
+          <span class="skill-cat-title">Performance</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">FlatList Optimization</span>
+          <span class="skill-tag">Hermes Engine</span>
+          <span class="skill-tag">Memoization</span>
+          <span class="skill-tag">Bundle Optimization</span>
+          <span class="skill-tag">Scalable Architecture</span>
+          <span class="skill-tag">JS/UI Thread Profiling</span>
+          <span class="skill-tag">Flipper Debugging</span>
+        </div>
+      </div>
+
+      <!-- Mobile Security -->
+      <div class="skill-category reveal reveal-delay-1" style="--cat-color:#ef4444;--cat-bg:rgba(239,68,68,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">🔒</div>
+          <span class="skill-cat-title">Mobile Security</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">SSL Pinning</span>
+          <span class="skill-tag">AES-256 Encryption</span>
+          <span class="skill-tag">RSA Encryption</span>
+          <span class="skill-tag">JWT Authentication</span>
+          <span class="skill-tag">Biometric Auth</span>
+          <span class="skill-tag">Root/Jailbreak Detection</span>
+          <span class="skill-tag">Secure Storage</span>
+          <span class="skill-tag">Data Encryption</span>
+          <span class="skill-tag">Screenshot &amp; Recording Disabled</span>
+        </div>
+      </div>
+
+      <!-- Offline Architecture -->
+      <div class="skill-category reveal reveal-delay-2" style="--cat-color:#06b6d4;--cat-bg:rgba(6,182,212,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">📡</div>
+          <span class="skill-cat-title">Offline Architecture</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Offline-First Architecture</span>
+          <span class="skill-tag">SQLite</span>
+          <span class="skill-tag">Realm Database</span>
+          <span class="skill-tag">Background Sync</span>
+          <span class="skill-tag">Local Persistence</span>
+          <span class="skill-tag">Conflict Resolution</span>
+          <span class="skill-tag">Queue &amp; Retry Logic</span>
+        </div>
+      </div>
+
+      <!-- Firebase Services -->
+      <div class="skill-category reveal" style="--cat-color:#f97316;--cat-bg:rgba(249,115,22,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">🔥</div>
+          <span class="skill-cat-title">Firebase Services</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Firebase Crashlytics</span>
+          <span class="skill-tag">Firebase Analytics</span>
+          <span class="skill-tag">Firebase Auth</span>
+          <span class="skill-tag">Push Notifications (FCM)</span>
+          <span class="skill-tag">Deep Linking</span>
+        </div>
+      </div>
+
+      <!-- Testing -->
+      <div class="skill-category reveal reveal-delay-1" style="--cat-color:#a855f7;--cat-bg:rgba(168,85,247,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">🧪</div>
+          <span class="skill-cat-title">Testing</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Jest</span>
+          <span class="skill-tag">React Native Testing Library</span>
+          <span class="skill-tag">Unit Testing</span>
+          <span class="skill-tag">Flipper Debugging</span>
+          <span class="skill-tag">Firebase Crashlytics</span>
+          <span class="skill-tag">Performance Monitoring</span>
+        </div>
+      </div>
+
+      <!-- REST APIs -->
+      <div class="skill-category reveal reveal-delay-2" style="--cat-color:#0ea5e9;--cat-bg:rgba(14,165,233,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">🔌</div>
+          <span class="skill-cat-title">REST APIs</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Axios</span>
+          <span class="skill-tag">Fetch API</span>
+          <span class="skill-tag">Error Handling &amp; Retry</span>
+          <span class="skill-tag">API Caching</span>
+          <span class="skill-tag">Payload Optimization</span>
+          <span class="skill-tag">Interceptors</span>
+          <span class="skill-tag">Auth Token Refresh</span>
+        </div>
+      </div>
+
+      <!-- Version Control -->
+      <div class="skill-category reveal" style="--cat-color:#ec4899;--cat-bg:rgba(236,72,153,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">🌿</div>
+          <span class="skill-cat-title">Version Control</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">AWS CodeCommit</span>
+          <span class="skill-tag">Branching Strategies</span>
+          <span class="skill-tag">Code Reviews</span>
+          <span class="skill-tag">PR Workflows</span>
+        </div>
+      </div>
+
+      <!-- Deployments -->
+      <div class="skill-category reveal reveal-delay-1" style="--cat-color:#14b8a6;--cat-bg:rgba(20,184,166,.1);">
+        <div class="skill-cat-head">
+          <div class="skill-cat-icon">🚢</div>
+          <span class="skill-cat-title">Deployments</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">App Store Deployment</span>
+          <span class="skill-tag">Play Store Deployment</span>
+          <span class="skill-tag">Xcode</span>
+          <span class="skill-tag">Android Studio</span>
+        </div>
+        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);">
+          <div style="font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.6rem;">Additional Exposure</div>
+          <div class="skill-tags">
+            <span class="skill-tag" style="opacity:.75;">Fastlane</span>
+            <span class="skill-tag" style="opacity:.75;">CI/CD (GitHub Actions)</span>
+            <span class="skill-tag" style="opacity:.75;">OTA Updates</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <p class="section-label">Career</p>
+      <h2 class="section-title">Work <span>Experience</span></h2>
+      <p class="section-sub">4+ years of building enterprise-grade mobile applications across diverse industries.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="tl-head">
+            <span class="tl-company">Fortune4 Technologies</span>
+            <span class="tl-badge">Latest</span>
+          </div>
+          <p class="tl-role">React Native Developer</p>
+          <div class="tl-meta">
+            <span class="tl-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Nov 2025 – Apr 2026
+            </span>
+            <span class="tl-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Navi Mumbai, India
+            </span>
+          </div>
+          <ul class="tl-points">
+            <li>Delivered end-to-end features for OTT Play, a multi-provider streaming platform with 10M+ downloads.</li>
+            <li>Identified and resolved performance bottlenecks on high-traffic content/discovery screens — improved responsiveness by 30–35%.</li>
+            <li>Coordinated with backend teams to optimize API payloads and handle inconsistent API responses, improving UI stability.</li>
+            <li>Delivered features and resolved production issues within Agile sprint cycles with minimal post-release defects.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-dot" style="border-color:var(--purple);"><div style="width:8px;height:8px;border-radius:50%;background:var(--purple);"></div></div>
+        <div class="timeline-card">
+          <div class="tl-head">
+            <span class="tl-company">Mobilestyx Consulting &amp; Solutions</span>
+            <span class="tl-badge" style="background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.25);color:#a78bfa;">4 Years</span>
+          </div>
+          <p class="tl-role" style="color:#a78bfa;">React Native Developer</p>
+          <div class="tl-meta">
+            <span class="tl-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Sep 2021 – Nov 2025
+            </span>
+            <span class="tl-meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Mumbai, India
+            </span>
+          </div>
+          <ul class="tl-points">
+            <li>Primary React Native developer for enterprise apps serving clients in India, Gulf, Canada, and the UK.</li>
+            <li>Led mobile security implementation — passed formal client security audits with zero critical findings across all reviewed apps.</li>
+            <li>Developed custom native modules (Android/iOS bridging) for device-level integrations and encryption workflows.</li>
+            <li>Established offline-first data patterns and standardized API integration approaches across multiple projects.</li>
+            <li>Built reusable UI component libraries, reducing development effort and accelerating feature delivery.</li>
+            <li>Mentored junior developers through code reviews and mobile development best practices.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">Featured <span>Projects</span></h2>
+      <p class="section-sub">Production apps deployed to millions of users across iOS and Android platforms.</p>
+    </div>
+    <div class="projects-grid">
+
+      <!-- OTT Play -->
+      <div class="project-card reveal">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(239,68,68,.1);font-size:1.6rem;">📺</div>
+          <div class="proj-top">
+            <h3 class="proj-name">OTT Play</h3>
+            <p class="proj-client">Hindustan Times Media</p>
+            <div class="proj-stats">
+              <span class="proj-stat">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                10M+ Downloads
+              </span>
+              <span class="proj-stat">⭐ 4.4 Rating</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <p class="proj-desc">Multi-provider OTT streaming platform for Hindustan Times Media. Worked on content discovery, performance optimization, and production issue resolution at scale.</p>
+          <div class="proj-highlights">
+            <div class="proj-hl">Reduced screen load times by ~30–35% via FlatList optimization, memoization, and selector profiling with Flipper.</div>
+            <div class="proj-hl">Integrated REST APIs with structured error handling, retry logic, and optimized data handling.</div>
+            <div class="proj-hl">Resolved critical production issues within Agile sprint cycles, achieving minimal post-release defects.</div>
+          </div>
+          <div class="proj-tech">
+            <span class="proj-tech-tag">React Native</span>
+            <span class="proj-tech-tag">FlatList Optimization</span>
+            <span class="proj-tech-tag">Memoization</span>
+            <span class="proj-tech-tag">Flipper</span>
+            <span class="proj-tech-tag">REST APIs</span>
+            <span class="proj-tech-tag">Agile</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://play.google.com/store/apps/details?id=com.ht.ottplay" target="_blank" class="proj-link android">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.41.74 3.23.8 1.23-.24 2.41-.93 3.73-.84 1.58.13 2.77.75 3.51 1.92-3.24 1.94-2.68 6.08.56 7.35-.57 1.54-1.32 3.06-3.03 4.65zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              Play Store
+            </a>
+            <a href="https://apps.apple.com/in/app/ottplay/id1536115085" target="_blank" class="proj-link ios">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.41.74 3.23.8 1.23-.24 2.41-.93 3.73-.84 1.58.13 2.77.75 3.51 1.92-3.24 1.94-2.68 6.08.56 7.35-.57 1.54-1.32 3.06-3.03 4.65zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              App Store
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atom -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(59,130,246,.1);font-size:1.6rem;">🏢</div>
+          <div class="proj-top">
+            <h3 class="proj-name">Atom — HR &amp; Compliance</h3>
+            <p class="proj-client">ICICI Prudential Life Insurance</p>
+            <div class="proj-stats">
+              <span class="proj-stat">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                100K+ Downloads
+              </span>
+              <span class="proj-stat">🛡️ Enterprise Security</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <p class="proj-desc">Enterprise-grade HR and compliance application for a major insurance corporation. Full security audit pass with zero critical findings.</p>
+          <div class="proj-highlights">
+            <div class="proj-hl">Implemented SSL pinning, root/jailbreak detection, AES-256/RSA encryption, JWT &amp; biometric auth — passed security audits with zero critical findings.</div>
+            <div class="proj-hl">Developed custom native modules for device-level integrations; integrated push notifications, deep linking, and API caching.</div>
+            <div class="proj-hl">Improved crash-free rate from 97% → 99% through performance optimization and bundle size reduction.</div>
+          </div>
+          <div class="proj-tech">
+            <span class="proj-tech-tag">SSL Pinning</span>
+            <span class="proj-tech-tag">AES-256</span>
+            <span class="proj-tech-tag">Biometric Auth</span>
+            <span class="proj-tech-tag">Native Modules</span>
+            <span class="proj-tech-tag">TanStack Query</span>
+            <span class="proj-tech-tag">Firebase</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://play.google.com/store/apps/details?id=com.mobilestyx.mobilestyxapp" target="_blank" class="proj-link android">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.41.74 3.23.8 1.23-.24 2.41-.93 3.73-.84 1.58.13 2.77.75 3.51 1.92-3.24 1.94-2.68 6.08.56 7.35-.57 1.54-1.32 3.06-3.03 4.65zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              Play Store
+            </a>
+            <a href="https://hr.iciciprulife.com/atomapp/AtomIOS" target="_blank" class="proj-link ios">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.41.74 3.23.8 1.23-.24 2.41-.93 3.73-.84 1.58.13 2.77.75 3.51 1.92-3.24 1.94-2.68 6.08.56 7.35-.57 1.54-1.32 3.06-3.03 4.65zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              App Store
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dunes -->
+      <div class="project-card reveal">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(245,158,11,.1);font-size:1.6rem;">🌿</div>
+          <div class="proj-top">
+            <h3 class="proj-name">Dunes — Field Operations</h3>
+            <p class="proj-client">Russell IPM Ltd · Saudi Arabia</p>
+            <div class="proj-stats">
+              <span class="proj-stat">📡 Offline-First</span>
+              <span class="proj-stat">🔄 Real-Time Sync</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <p class="proj-desc">Field operations and pest management app for an international client, built for reliability in low-connectivity environments across Saudi Arabia.</p>
+          <div class="proj-highlights">
+            <div class="proj-hl">Designed offline-first architecture using Realm with background sync — ensures reliable data in low-connectivity field environments.</div>
+            <div class="proj-hl">Implemented real-time data synchronization minimizing data loss during field operations.</div>
+            <div class="proj-hl">Delivered production releases on both Android &amp; iOS from development through App Store/Play Store deployment.</div>
+          </div>
+          <div class="proj-tech">
+            <span class="proj-tech-tag">Realm Database</span>
+            <span class="proj-tech-tag">Offline-First</span>
+            <span class="proj-tech-tag">Background Sync</span>
+            <span class="proj-tech-tag">React Native</span>
+            <span class="proj-tech-tag">Cross-Platform</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://dunes.solutions/androidapp" target="_blank" class="proj-link android">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.41.74 3.23.8 1.23-.24 2.41-.93 3.73-.84 1.58.13 2.77.75 3.51 1.92-3.24 1.94-2.68 6.08.56 7.35-.57 1.54-1.32 3.06-3.03 4.65zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              Android
+            </a>
+            <a href="https://apps.apple.com/app/dunes/id6621250131" target="_blank" class="proj-link ios">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.41.74 3.23.8 1.23-.24 2.41-.93 3.73-.84 1.58.13 2.77.75 3.51 1.92-3.24 1.94-2.68 6.08.56 7.35-.57 1.54-1.32 3.06-3.03 4.65zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              iOS
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPL Safety First -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(16,185,129,.1);font-size:1.6rem;">🦺</div>
+          <div class="proj-top">
+            <h3 class="proj-name">GPL Safety First</h3>
+            <p class="proj-client">Godrej Properties Ltd</p>
+            <div class="proj-stats">
+              <span class="proj-stat">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                5K+ Downloads
+              </span>
+              <span class="proj-stat">⭐ 4.5 Rating</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <p class="proj-desc">Work permit and safety compliance management app for Godrej Properties construction sites, enabling digital workflows for field workers with or without connectivity.</p>
+          <div class="proj-highlights">
+            <div class="proj-hl">Built offline-first architecture using SQLite — field workers create and submit permits without any network connectivity, with automatic sync when back online.</div>
+            <div class="proj-hl">Implemented queue-based background sync with conflict resolution, preventing workflow disruptions at remote construction sites.</div>
+            <div class="proj-hl">Multi-level digital approval workflows streamlined permit processing, replacing manual paper-based processes across all Godrej construction sites.</div>
+          </div>
+          <div class="proj-tech">
+            <span class="proj-tech-tag">SQLite</span>
+            <span class="proj-tech-tag">Offline Persistence</span>
+            <span class="proj-tech-tag">Digital Workflows</span>
+            <span class="proj-tech-tag">React Native</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://play.google.com/store/apps/details?id=com.gplsafetyfirst" target="_blank" class="proj-link android">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.41.74 3.23.8 1.23-.24 2.41-.93 3.73-.84 1.58.13 2.77.75 3.51 1.92-3.24 1.94-2.68 6.08.56 7.35-.57 1.54-1.32 3.06-3.03 4.65zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              Play Store
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="section-inner">
+    <div class="section-head reveal" style="text-align:center;">
+      <p class="section-label">By The Numbers</p>
+      <h2 class="section-title">Impact &amp; <span>Achievements</span></h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <div class="stat-num" data-target="4" data-suffix="+">0</div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-num" data-target="10" data-suffix="M+">0</div>
+        <div class="stat-label">App Downloads</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-num" data-target="99" data-suffix="%">0</div>
+        <div class="stat-label">Crash-Free Rate</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="stat-num" data-target="8" data-suffix="+">0</div>
+        <div class="stat-label">Production Apps</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-4">
+        <div class="stat-num" data-target="0" data-suffix="" data-display="Zero">0</div>
+        <div class="stat-label">Security Audit Findings</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-num" data-target="35" data-suffix="%">0</div>
+        <div class="stat-label">Performance Boost (Load Time)</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-num" data-target="50" data-suffix="%">0</div>
+        <div class="stat-label">Faster Permit Processing</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-num" data-target="4" data-suffix="">0</div>
+        <div class="stat-label">Countries Served</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="section-inner">
+    <div class="section-head reveal" style="text-align:center;">
+      <p class="section-label">Download</p>
+      <h2 class="section-title" style="margin-bottom:.5rem;">My <span>Resume</span></h2>
+    </div>
+    <div class="resume-card reveal">
+      <span class="ats-badge">✓ ATS Optimized</span>
+      <h3>Rutik Tukaram Waghe</h3>
+      <p>React Native Developer · Mobile Application Developer · Mumbai, India</p>
+      <div class="resume-preview">
+        <div class="resume-preview-row"><span class="key">Experience</span><span class="val">4+ Years</span></div>
+        <div class="resume-preview-row"><span class="key">Specialization</span><span class="val">React Native (iOS & Android)</span></div>
+        <div class="resume-preview-row"><span class="key">Current</span><span class="val">Fortune4 Technologies</span></div>
+        <div class="resume-preview-row"><span class="key">Education</span><span class="val">B.Sc. IT — University of Mumbai</span></div>
+        <div class="resume-preview-row"><span class="key">Certification</span><span class="val">Android Development · CMS IT Services</span></div>
+        <div class="resume-preview-row"><span class="key">Location</span><span class="val">Mumbai, India</span></div>
+      </div>
+      <a href="https://drive.google.com/uc?export=download&id=1etyQdlLkDMu5TzwkRO5gUWXt_aIj8lMn" target="_blank" class="btn-primary" style="display:inline-flex;margin:0 auto;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Let's <span>Connect</span></h2>
+      <p class="section-sub">Open to new opportunities, collaborations, and interesting mobile projects.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <p style="color:var(--text2);font-weight:300;font-size:1rem;line-height:1.8;margin-bottom:.5rem;">
+          Whether you're looking to hire a React Native developer, discuss a project, or just say hello — my inbox is always open.
+        </p>
+        <div class="contact-items">
+          <a href="tel:+919082828334" class="contact-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14z"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-val">+91 9082828334</div>
+            </div>
+          </a>
+          <a href="mailto:rutikwaghe123@gmail.com?subject=Hiring%20Inquiry%20%E2%80%94%20Rutik%20Waghe&body=Hi%20Rutik%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect%20regarding%20a%20React%20Native%20opportunity.%0A%0A" class="contact-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-val">rutikwaghe123@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/rutik-waghe-b378b2195/" target="_blank" class="contact-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-val">rutik-waghe-b378b2195</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <h3>Ready to Work Together?</h3>
+        <p style="margin-bottom:1.75rem;">I'm an immediate joiner — available to start right away. Reach out through any channel below.</p>
+        <a href="mailto:rutikwaghe123@gmail.com?subject=Hiring%20Inquiry%20%E2%80%94%20Rutik%20Waghe&body=Hi%20Rutik%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect%20regarding%20a%20React%20Native%20opportunity.%0A%0A" class="btn-primary" style="width:100%;justify-content:center;margin-bottom:1rem;display:flex;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Send Email
+        </a>
+        <a href="https://www.linkedin.com/in/rutik-waghe-b378b2195/" target="_blank" class="btn-outline" style="width:100%;justify-content:center;margin-bottom:1.75rem;display:flex;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          Connect on LinkedIn
+        </a>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;">
+          <div style="font-size:.75rem;color:var(--text3);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.1em;font-weight:600;">Availability</div>
+          <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;flex-shrink:0;"></span>
+            <span style="color:var(--text);font-size:.9rem;font-weight:500;">Immediate Joiner</span>
+          </div>
+          <div style="color:var(--text2);font-size:.85rem;font-weight:300;">Available to join within days of offer. Open to full-time roles and remote opportunities.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Built with <span>♥</span> · Rutik Tukaram Waghe · React Native Developer · Mumbai, India</p>
+  <p style="margin-top:.35rem;">+91 9082828334 · rutikwaghe123@gmail.com</p>
+</footer>
+
+<script>
+// SMOOTH SCROLL HELPER
+function navScrollTo(id){
+  var el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// SCROLL PROGRESS
+const prog=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  prog.style.width=(window.scrollY/h*100)+'%';
+});
+
+// NAVBAR
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>50);
+});
+
+// HAMBURGER
+const ham=document.getElementById('hamburger');
+const mob=document.getElementById('mobMenu');
+ham.addEventListener('click',()=>mob.classList.toggle('open'));
+function closeMob(){mob.classList.remove('open');}
+document.addEventListener('click',e=>{if(!mob.contains(e.target)&&!ham.contains(e.target))mob.classList.remove('open');});
+
+// REVEAL ON SCROLL
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// HERO CANVAS — animated dot grid
+const canvas=document.getElementById('heroCanvas');
+const ctx=canvas.getContext('2d');
+let W,H,dots=[];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;buildDots();}
+function buildDots(){
+  dots=[];
+  const spacing=42;
+  for(let x=0;x<W+spacing;x+=spacing){
+    for(let y=0;y<H+spacing;y+=spacing){
+      dots.push({x,y,ox:x,oy:y,vx:0,vy:0,s:(Math.random()*.8+.4)});
+    }
+  }
+}
+let mx=-9999,my=-9999;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+function drawCanvas(t){
+  ctx.clearRect(0,0,W,H);
+  for(const d of dots){
+    const dx=d.x-mx,dy=d.y-my,dist=Math.sqrt(dx*dx+dy*dy),r=90;
+    if(dist<r){const f=(1-dist/r)*.8;d.vx+=dx/dist*f;d.vy+=dy/dist*f;}
+    d.vx+=(d.ox-d.x)*.08;d.vy+=(d.oy-d.y)*.08;
+    d.vx*=.78;d.vy*=.78;d.x+=d.vx;d.y+=d.vy;
+    const glow=dist<r?(1-dist/r)*.7:0;
+    ctx.beginPath();
+    ctx.arc(d.x,d.y,d.s*(1+glow*.4),0,Math.PI*2);
+    const a=0.08+glow*0.35;
+    ctx.fillStyle=`rgba(59,130,246,${a})`;
+    ctx.fill();
+  }
+  requestAnimationFrame(drawCanvas);
+}
+window.addEventListener('resize',resize);
+resize();
+requestAnimationFrame(drawCanvas);
+
+// COUNT UP
+function countUp(el){
+  const target=parseFloat(el.dataset.target);
+  const suffix=el.dataset.suffix||'';
+  const display=el.dataset.display;
+  if(display){el.textContent=display;return;}
+  const dur=1800,fps=60,steps=dur/1000*fps;
+  let cur=0,step=0;
+  const inc=target/steps;
+  const t=setInterval(()=>{
+    cur=Math.min(cur+inc,target);step++;
+    const val=Number.isInteger(target)?Math.round(cur):cur.toFixed(1);
+    el.textContent=val+suffix;
+    if(step>=steps)clearInterval(t);
+  },1000/fps);
+}
+const statsObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.stat-num').forEach(countUp);
+      statsObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.4});
+const statsGrid=document.querySelector('.stats-grid');
+if(statsGrid)statsObs.observe(statsGrid);
+
+// FORM
+function handleSend(){
+  const btn=document.getElementById('sendBtn');
+  btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sent!';
+  btn.style.background='var(--green)';
+  setTimeout(()=>{
+    btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message';
+    btn.style.background='';
+  },2500);
+}
+</script>
+</body>
+</html>
